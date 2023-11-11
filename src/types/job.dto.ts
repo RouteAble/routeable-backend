@@ -3,6 +3,6 @@ export interface SendTxJob {
   recipient: string;
 }
 
-export interface SendSimilarityJob {
+export interface ImageJob {
   image: string;
 }
