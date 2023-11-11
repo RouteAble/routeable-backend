@@ -5,7 +5,7 @@ services:
     volumes:
       - .:/usr/src/app
     ports:
-      - "4193:4000"
+      - "4000:4000"
     env_file:
       - .env
   cache:
