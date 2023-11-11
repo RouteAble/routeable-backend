@@ -5,20 +5,27 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { MapsService } from './maps.service';
-import { SendSimilarityJob } from '../types/job.dto';
+import { Detection, MapsService, Similarity } from './maps.service';
+import { ImageJob } from '../types/job.dto';
 
 @Controller('maps')
 export class MapsController {
   constructor(private readonly mapsService: MapsService) {}
 
   @Post('similarity')
-  async similarity(
-    @Body() job: SendSimilarityJob,
-  ): Promise<{ similarity_score: number }> {
+  async similarity(@Body() job: ImageJob): Promise<Similarity> {
     const result = await this.mapsService.similarity(job);
-    if (!result) {
-      throw new HttpException('Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    if (typeof result === 'string') {
+      throw new HttpException(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    return result;
+  }
+
+  @Post('detection')
+  async detection(@Body() job: ImageJob): Promise<Detection> {
+    const result = await this.mapsService.objectDetection(job);
+    if (typeof result === 'string') {
+      throw new HttpException(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return result;
   }
