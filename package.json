@@ -37,14 +37,7 @@
     "bull": "^4.11.3",
     "ergo-lib-wasm-nodejs": "^0.24.0",
     "json-bigint": "^1.0.0",
-    "jsonwebtoken": "^9.0.1",
-    "nft.storage": "^7.1.1",
-    "passport": "^0.6.0",
-    "passport-jwt": "^4.0.1",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0",
-    "socket.io": "^4.7.1",
-    "zeromq": "6.0.0-beta.17"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.1.4",
