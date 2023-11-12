@@ -5,7 +5,6 @@ import {
   ErgoAddress,
   Network,
   OutputBuilder,
-  TokenAmount,
   TransactionBuilder,
 } from '@fleet-sdk/core';
 import { Configuration, DefaultApiFactory } from '../explorerApi';
@@ -22,7 +21,6 @@ import {
   ErgoTransactionOutput,
 } from '../types/nodeApi.dto';
 import { convertToErgoTransactionOutput } from '../adapters/node';
-import { EIP12UnsignedTransaction } from '@fleet-sdk/common/src/types/transactions';
 import { BackendWallet } from '../api/rust/BackendWallet';
 import { SendTxJob } from '../types/job.dto';
 
@@ -153,7 +151,7 @@ export class BlockchainConsumerService {
     output: OutputBuilder | OutputBuilder[],
     changeAddress: string,
     fee: bigint = this.MIN_TX_FEE,
-  ): Promise<EIP12UnsignedTransaction> {
+  ): Promise<any> {
     const creationHeight = await this.getCreationHeight();
     return new TransactionBuilder(creationHeight)
       .from(input)

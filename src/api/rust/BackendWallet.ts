@@ -12,10 +12,6 @@ import {
   Wallet,
 } from 'ergo-lib-wasm-nodejs';
 import { Network } from '@fleet-sdk/core';
-import {
-  EIP12UnsignedTransaction,
-  SignedTransaction,
-} from '@fleet-sdk/common/src/types/transactions';
 export class BackendWallet {
   private readonly walletMnemonic: string;
   private readonly walletPassword: string = '';
@@ -40,10 +36,10 @@ export class BackendWallet {
   }
 
   async signTransaction(
-    unsignedTransaction: EIP12UnsignedTransaction,
+    unsignedTransaction: any,
     explorerClient: any,
     index: number | number[] = 0,
-  ): Promise<SignedTransaction> {
+  ): Promise<any> {
     const sks = new SecretKeys();
     if (typeof index === 'number') {
       const sk = this.getExtendedSecretKey(index);
@@ -67,7 +63,7 @@ export class BackendWallet {
           ErgoBoxes.from_boxes_json(unsignedTransaction.dataInputs),
         )
         .to_json(),
-    ) as SignedTransaction;
+    );
   }
 
   private getRustNetwork(): number {
