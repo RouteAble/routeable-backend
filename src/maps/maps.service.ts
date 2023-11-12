@@ -205,6 +205,7 @@ export class MapsService {
       .from('Image')
       .insert([
         {
+          imageB64: params.image,
           sha256_hash: hash,
           stairs: tags.stairs,
           ramps: tags.ramps,
@@ -254,6 +255,7 @@ export class MapsService {
         updatePayload['latitude'] = updatedParams.lat;
         updatePayload['longitude'] = updatedParams.long;
         updatePayload['user_id'] = updatedParams.userId;
+        updatePayload['imageB64'] = updatedParams.image;
       }
 
       // If no updates, return false
