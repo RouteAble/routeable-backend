@@ -1,5 +1,8 @@
 FROM node:18
 
+# prevent user interaction requests
+ENV DEBIAN_FRONTEND=noninteractive
+
 WORKDIR /app
 
 COPY package*.json ./
