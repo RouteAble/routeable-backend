@@ -55,7 +55,7 @@ export class BlockchainConsumerService {
 
   async sendTx(job: Job<SendTxJob>): Promise<void> {
     const address = job.data.recipient;
-    const amount = job.data.amount;
+    const amount = BigInt(job.data.amount);
 
     if (!ErgoAddress.validate(address)) {
       console.log('incorrect address provided');
@@ -99,11 +99,11 @@ export class BlockchainConsumerService {
   ): Promise<Box<Amount>[]> {
     const inputs: Box<Amount>[] = [];
     let currentSum = BigInt(0);
-    const zengateErgoTree = ErgoAddress.fromBase58(walletAddress).ergoTree;
+    const umapsErgoTree = ErgoAddress.fromBase58(walletAddress).ergoTree;
 
     const unconfirmedBoxesRes =
       await this.nodeClient.getTransactionsUnconfirmedByErgoTree(
-        zengateErgoTree,
+        umapsErgoTree,
       );
     const unconfirmedInputs: ErgoTransactionInput[] = unconfirmedBoxesRes
       .map((tx) => tx.inputs)
@@ -113,7 +113,7 @@ export class BlockchainConsumerService {
       .flat()
       .filter(
         (output) =>
-          output.ergoTree === zengateErgoTree &&
+          output.ergoTree === umapsErgoTree &&
           !unconfirmedInputs.some((input) => input.boxId === output.boxId),
       );
 

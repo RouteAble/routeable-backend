@@ -8,7 +8,7 @@ import { BlockchainController } from './blockchain.controller';
   imports: [
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
+        host: 'redis',
         port: 6379,
       },
     }),
@@ -22,5 +22,6 @@ import { BlockchainController } from './blockchain.controller';
   ],
   controllers: [BlockchainController],
   providers: [BlockchainService, BlockchainConsumerService],
+  exports: [BlockchainService],
 })
 export class BlockchainModule {}
