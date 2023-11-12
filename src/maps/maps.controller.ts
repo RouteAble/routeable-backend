@@ -5,7 +5,16 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { Detection, MapsService, Similarity } from './maps.service';
+import {
+  Detection,
+  Init,
+  MapsService,
+  Message,
+  Similarity,
+  Submission,
+  UpdateImage,
+  UpdateTag,
+} from './maps.service';
 import { ImageJob } from '../types/job.dto';
 
 @Controller('maps')
@@ -28,5 +37,55 @@ export class MapsController {
       throw new HttpException(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return result;
+  }
+
+  @Post('checkImage')
+  async checkImage(@Body() param: { sha256Hash: string }): Promise<Message> {
+    const result = await this.mapsService.checkImageHash(param.sha256Hash);
+    return { message: result };
+  }
+
+  @Post('submission')
+  async submission(@Body() param: Submission): Promise<Message> {
+    const result = await this.mapsService.submission(param);
+    return { message: result };
+  }
+
+  @Post('init')
+  async init(@Body() param: Init): Promise<Message> {
+    const result = await this.mapsService.initUser(param.userId);
+    return { message: result };
+  }
+
+  @Post('updateTags')
+  async updateTags(@Body() param: UpdateTag): Promise<Message> {
+    const result = await this.mapsService.updateImageInDatabase(
+      param.sha256Hash,
+      {
+        stairs: param.stairs,
+        ramps: param.ramps,
+        guard_rails: param.guard_rails,
+      },
+    );
+    return { message: result };
+  }
+
+  @Post('updateImage')
+  async updateImage(@Body() param: UpdateImage): Promise<Message> {
+    const result = await this.mapsService.updateImageInDatabase(
+      param.sha256Hash,
+      {
+        stairs: param.stairs,
+        ramps: param.ramps,
+        guard_rails: param.guard_rails,
+      },
+      {
+        image: param.image,
+        long: param.long,
+        lat: param.lat,
+        userId: param.userId,
+      },
+    );
+    return { message: result };
   }
 }
