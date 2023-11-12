@@ -11,6 +11,7 @@ import { ErgoAddress, Network } from '@fleet-sdk/core';
 // @ts-ignore
 import { generateMnemonic } from 'bip39';
 import { BackendWallet } from '../api/rust/BackendWallet';
+import { decode } from 'base64-arraybuffer';
 
 export interface Similarity {
   similarity_score: number;
@@ -123,7 +124,7 @@ export class MapsService {
       return false;
     }
 
-    if (similarity >= 0.75) {
+    if (similarity >= 0.5) {
       console.log('too similar:', similarity);
       return false;
     }
@@ -221,6 +222,21 @@ export class MapsService {
       console.log(error);
       return false;
     }
+
+    const { data: uploadData, error: uploadError } = await this.supabaseService
+      .getClient()
+      .storage.from('image')
+      .upload(`${hash}.png`, decode(params.image), {
+        upsert: false,
+        contentType: 'image/png',
+      });
+
+    console.log(uploadData);
+
+    if (uploadError) {
+      console.log('uploadError upsert error');
+    }
+
     return true;
   }
 
