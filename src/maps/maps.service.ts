@@ -87,8 +87,10 @@ export class MapsService {
     return crypto.createHash('sha256').update(buffer).digest('hex');
   }
 
-  async checkImageHash(sha256Hash: string): Promise<boolean> {
+  async checkImageHash(base64Image: string): Promise<boolean> {
     const supabase = this.supabaseService.getClient();
+
+    const sha256Hash = this.getHash(base64Image);
 
     const { data, error } = await supabase
       .from('Image')

@@ -40,8 +40,8 @@ export class MapsController {
   }
 
   @Post('checkImage')
-  async checkImage(@Body() param: { sha256Hash: string }): Promise<Message> {
-    const result = await this.mapsService.checkImageHash(param.sha256Hash);
+  async checkImage(@Body() param: { base64Image: string }): Promise<Message> {
+    const result = await this.mapsService.checkImageHash(param.base64Image);
     return { message: result };
   }
 
