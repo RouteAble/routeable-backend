@@ -1,5 +1,5 @@
 export interface SendTxJob {
-  amount: bigint;
+  amount: number;
   recipient: string;
 }
 
