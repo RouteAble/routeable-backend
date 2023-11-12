@@ -1,13 +1,13 @@
 version: '3'
 services:
-#  umaps-backend:
-#    build: .
-#    volumes:
-#      - .:/usr/src/app
-#    ports:
-#      - "4000:4000"
-#    env_file:
-#      - .env
+  umaps-backend:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
   redis:
     image: redis:6.2-alpine
     restart: always
